@@ -4,3 +4,9 @@
 <button (click)="onCreateTask()" [disabled]="!canCreateTask">
     Realizar Transferência
 </button>
+
+<app-task-form [title]="formTitle" (taskSubmitted)="onTaskSubmitted($event)">
+</app-task-form>
+
+<app-task-list [tasks]="tasks" (taskDeleted)="onTaskDeleted($event)"></app-task-list>
+

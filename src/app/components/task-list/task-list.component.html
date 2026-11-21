@@ -1,0 +1,17 @@
+<p *ngIf="tasks.length === 0">
+        Não há tarefas criadas!
+    </p>
+<ul *ngIf="tasks.length > 0">
+    <li *ngFor="let task of tasks">
+        <h3>{{ task.titulo }}</h3>
+        <p>{{ task.descricao }}</p>
+        <p>{{ task.prioridade }}</p>
+        <p>{{ task.status }}</p>
+        <button (click)="onDeleteTask(task.id)">
+            Deletar Tarefa
+        </button>
+        <button (click)="onEditTask(task)">
+            Atualizar Tarefa
+        </button>
+    </li>
+</ul>

@@ -1,0 +1,1 @@
+export type TaskStatus = 'PENDENTE' | 'EM_ANDAMENTO' | 'CONCLUIDA'

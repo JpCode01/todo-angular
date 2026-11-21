@@ -1,1 +1,8 @@
-<p>task-form works!</p>
+<h2>{{ title }}</h2>
+<input type="text" [(ngModel)]="taskName">
+<button (click)="submitTask()">
+    Salvar
+</button>
+<p *ngIf="hasError">
+    O título da tarefa é obrigatório.
+</p>
