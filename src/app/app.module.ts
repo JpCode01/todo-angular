@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TaskDialogComponent } from './components/task-dialog/task-dialog.component';
+import { LandingComponent } from './pages/landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { TaskDialogComponent } from './components/task-dialog/task-dialog.compon
     HomeComponent,
     TaskFormComponent,
     TaskListComponent,
-    TaskDialogComponent
+    TaskDialogComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
