@@ -1,8 +1,38 @@
 <h2>{{ title }}</h2>
-<input type="text" [(ngModel)]="taskName">
+
+<input type="text" [(ngModel)]="taskName" placeholder="Título da sua tareda">
+
+<textarea
+  name="description"
+  [(ngModel)]="taskDescription"
+  placeholder="Descreva sua tarefa">
+</textarea>
+
+<select name="priority" [(ngModel)]="taskPriority">
+  <option *ngFor="let priority of priorityList" [value]="priority">
+    {{ priority }}
+  </option>
+</select>
+
+<label *ngIf="task !== null" for="status">
+  Status da tarefa
+</label>
+
+<select
+  *ngIf="task !== null"
+  id="status"
+  name="status"
+  [(ngModel)]="taskStatus">
+
+  <option *ngFor="let status of statusList" [value]="status">
+    {{ status }}
+  </option>
+</select>
+
 <button (click)="submitTask()">
     Salvar
 </button>
+
 <p *ngIf="hasError">
     O título da tarefa é obrigatório.
 </p>

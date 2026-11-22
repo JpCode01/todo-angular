@@ -1,5 +1,5 @@
-import { Priority } from "./priority.type";
-import { TaskStatus } from "./task-status.type";
+import { Priority } from "./priority.enum";
+import { TaskStatus } from "./task-status.enum";
 
 export interface taskRequest {
     titulo: string,

@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Priority } from 'src/app/models/priority.enum';
 import { taskRequest } from 'src/app/models/task-request.model';
 import { taskResponse } from 'src/app/models/task-response.model';
+import { TaskStatus } from 'src/app/models/task-status.enum';
 
 @Component({
   selector: 'app-task-form',
@@ -19,10 +21,21 @@ export class TaskFormComponent implements OnChanges {
 
   taskName: string = ""
 
+  taskDescription: string = ""
+
+  priorityList: Priority[] = Object.values(Priority)
+
+  statusList: TaskStatus[] = Object.values(TaskStatus)
+
+  taskPriority: Priority = Priority.MEDIA
+
+  taskStatus: TaskStatus = TaskStatus.PENDENTE
+
   hasError: boolean = false
 
   submitTask(): void {  
     const trimmedTaskName = this.taskName.trim() 
+    const trimmedTaskDescription = this.taskDescription.trim() 
 
     if (trimmedTaskName === "") {
       this.hasError = true
@@ -32,7 +45,12 @@ export class TaskFormComponent implements OnChanges {
     this.hasError = false
 
     const task: taskRequest = {
-      titulo: trimmedTaskName
+      titulo: trimmedTaskName,
+      descricao: trimmedTaskDescription,
+      prioridade: this.taskPriority,
+      status: this.task !== null
+      ? this.taskStatus
+      : TaskStatus.PENDENTE
     }
 
     if (this.task !== null) {
@@ -52,10 +70,19 @@ export class TaskFormComponent implements OnChanges {
   ngOnChanges(): void {
     if (this.task !== null) {
       this.taskName = this.task.titulo
+      this.taskDescription = this.task.descricao ?? ""
+      this.taskPriority = this.task.prioridade ?? Priority.MEDIA
+      this.taskStatus = this.task.status ?? TaskStatus.PENDENTE
     } else {
-      this.taskName = ""
+      this.resetForm()
     }
+  }
 
+  resetForm(): void {
+    this.taskName = ""
+    this.taskDescription = ""
+    this.taskPriority = Priority.MEDIA
+    this.taskStatus = TaskStatus.PENDENTE
     this.hasError = false
   }
 

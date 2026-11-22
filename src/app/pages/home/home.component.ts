@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { TaskFormComponent } from 'src/app/components/task-form/task-form.component';
 import { taskRequest } from 'src/app/models/task-request.model';
 import { taskResponse } from 'src/app/models/task-response.model';
 import { TaskService } from 'src/app/services/task.service';
@@ -11,6 +12,9 @@ import { TaskService } from 'src/app/services/task.service';
 export class HomeComponent implements OnInit{
 
   constructor(private taskService: TaskService) {}
+
+  @ViewChild(TaskFormComponent)
+  taskForm!: TaskFormComponent
 
   pageTitle: string = "Minhas Tarefas"
   description: string = "Mantenha sua rotina sob controle de forma simples e rápida. Com o TODO-LIST, você anota suas ideias em segundos, define prazos e acompanha tudo o que precisa fazer em um só lugar."
@@ -27,6 +31,7 @@ export class HomeComponent implements OnInit{
     this.taskService.createTask(task).subscribe({
       next: (createdTask) => {
         this.tasks.push(createdTask)
+        this.taskForm.resetForm()
       },
       error: (err) => {
         console.error(err)
@@ -83,7 +88,7 @@ export class HomeComponent implements OnInit{
     })
   }
 
-  onTaskCacelled(): void {
+  onTaskCancelled(): void {
     this.selectedTask = null
   }
 }
