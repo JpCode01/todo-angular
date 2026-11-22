@@ -1,14 +1,21 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { taskRequest } from 'src/app/models/task-request.model';
+import { taskResponse } from 'src/app/models/task-response.model';
 
 @Component({
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })
-export class TaskFormComponent {
+export class TaskFormComponent implements OnChanges {
   @Input({ required: true }) title!: string
+  @Input() task: taskResponse | null = null
   @Output() taskSubmitted = new EventEmitter<taskRequest>()
+  @Output() taskUpdated = new EventEmitter<{
+    id: number,
+    data: taskRequest
+  }>()
+  @Output() taskCancelled = new EventEmitter<void>()
 
   taskName: string = ""
 
@@ -27,8 +34,29 @@ export class TaskFormComponent {
     const task: taskRequest = {
       titulo: trimmedTaskName
     }
-    
-    this.taskSubmitted.emit(task)
+
+    if (this.task !== null) {
+      this.taskUpdated.emit({
+        id: this.task.id,
+        data: task
+      })
+    } else {
+      this.taskSubmitted.emit(task)
+    }
+  }
+
+  cancelEdit(): void {
+    this.taskCancelled.emit()
+  }
+
+  ngOnChanges(): void {
+    if (this.task !== null) {
+      this.taskName = this.task.titulo
+    } else {
+      this.taskName = ""
+    }
+
+    this.hasError = false
   }
 
 }

@@ -5,8 +5,17 @@
     Realizar Transferência
 </button>
 
-<app-task-form [title]="formTitle" (taskSubmitted)="onTaskSubmitted($event)">
+<app-task-form 
+[title]="formTitle"
+[task]="selectedTask"
+(taskSubmitted)="onTaskSubmitted($event)"
+(taskUpdated)="onTaskUpdated($event)"
+(taskCancelled)="onTaskCacelled()">
 </app-task-form>
 
-<app-task-list [tasks]="tasks" (taskDeleted)="onTaskDeleted($event)"></app-task-list>
+<app-task-list 
+[tasks]="tasks" 
+(taskDeleted)="onTaskDeleted($event)"
+(taskSelected)="onTaskSelected($event)">
+</app-task-list>
 

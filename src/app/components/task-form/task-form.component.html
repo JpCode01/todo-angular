@@ -6,3 +6,7 @@
 <p *ngIf="hasError">
     O título da tarefa é obrigatório.
 </p>
+
+<button type="button" *ngIf="task !== null" (click)="cancelEdit()">
+    Cancelar edição
+</button>

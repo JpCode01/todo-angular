@@ -9,7 +9,7 @@ import { taskResponse } from 'src/app/models/task-response.model';
 export class TaskListComponent {
   @Input({ required: true }) tasks: taskResponse[] = []
   @Output() taskDeleted = new EventEmitter<number>()
-  @Output() taskSelected = new EventEmitter<taskResponse>
+  @Output() taskSelected = new EventEmitter<taskResponse>()
 
   onDeleteTask(id: number): void {
     this.taskDeleted.emit(id)
@@ -18,6 +18,4 @@ export class TaskListComponent {
   onEditTask(task: taskResponse): void {
     this.taskSelected.emit(task)
   }
-
-
 }

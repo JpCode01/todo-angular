@@ -20,6 +20,8 @@ export class HomeComponent implements OnInit{
   formTitle: string = "Cadastrar nova tarefa"
 
   tasks: taskResponse[] = []
+
+  selectedTask: taskResponse | null = null
   
   onTaskSubmitted(task: taskRequest): void {
     this.taskService.createTask(task).subscribe({
@@ -58,5 +60,30 @@ export class HomeComponent implements OnInit{
         console.error(err)
       }
     })
+  }
+
+  onTaskSelected(task: taskResponse): void {
+    this.selectedTask = task
+    console.log(this.selectedTask)
+  }
+
+  onTaskUpdated(event: {id: number, data: taskRequest}):void {
+    this.taskService.updateTask(event.id, event.data).subscribe({
+      next: (updateTask) => {
+        this.tasks = this.tasks.map(task =>
+          task.id === updateTask.id
+          ? updateTask
+          : task 
+        )
+        this.selectedTask = null
+      },
+      error: (err) => {
+        console.error(err)
+      }
+    })
+  }
+
+  onTaskCacelled(): void {
+    this.selectedTask = null
   }
 }
