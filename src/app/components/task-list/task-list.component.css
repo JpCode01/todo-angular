@@ -1,0 +1,51 @@
+.task-list {
+  margin-top: 32px;
+}
+
+.task-list h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 20px;
+}
+
+.task-card {
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.task-card mat-card-content {
+  padding-top: 16px;
+}
+
+.task-priority {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.task-card mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.task-execution {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 8px 4px;
+  border-top: 1px solid #e2e8f0;
+}
+
+@media (max-width: 400px) {
+  .task-execution {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

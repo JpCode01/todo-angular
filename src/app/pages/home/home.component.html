@@ -1,21 +1,50 @@
-<h1>{{ pageTitle }}</h1>
-<p>{{ description }}</p>
+<div class="home-container">
 
-<button (click)="onCreateTask()" [disabled]="!canCreateTask">
-    Realizar Transferência
-</button>
+  <header class="app-header">
+    <div class="brand">
+      <mat-icon>task_alt</mat-icon>
 
-<app-task-form 
-[title]="formTitle"
-[task]="selectedTask"
-(taskSubmitted)="onTaskSubmitted($event)"
-(taskUpdated)="onTaskUpdated($event)"
-(taskCancelled)="onTaskCancelled()">
-</app-task-form>
+      <div>
+        <h2>TaskFlow</h2>
+        <span>Seu espaço de produtividade</span>
+      </div>
+    </div>
+  </header>
 
-<app-task-list 
-[tasks]="tasks" 
-(taskDeleted)="onTaskDeleted($event)"
-(taskSelected)="onTaskSelected($event)">
-</app-task-list>
+  <main>
+    <section class="welcome-section">
+      <h1>{{ pageTitle }}</h1>
+      <p>
+        Organize suas atividades e acompanhe seu progresso
+        em um só lugar.
+      </p>
+    </section>
+
+    <section class="tasks-section">
+      <div class="section-header">
+        <div>
+          <h2>Suas tarefas</h2>
+          <p>Gerencie suas atividades cadastradas</p>
+        </div>
+
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="onCreateTask()">
+          <mat-icon>add</mat-icon>
+          Nova tarefa
+        </button>
+      </div>
+    
+    <app-task-list 
+        [tasks]="tasks" 
+        (taskDeleted)="onTaskDeleted($event)"
+        (taskSelected)="onTaskSelected($event)"
+        (taskExecuted)="onTaskExecuted($event)">
+    </app-task-list>
+
+   </section>
+  </main>
+</div>
+
 

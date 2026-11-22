@@ -1,17 +1,50 @@
-<p *ngIf="tasks.length === 0">
-        Não há tarefas criadas!
-    </p>
-<ul *ngIf="tasks.length > 0">
-    <li *ngFor="let task of tasks">
-        <h3>{{ task.titulo }}</h3>
+<section class="task-list">
+  <h2>Suas tarefas</h2>
+
+  <p *ngIf="tasks.length === 0">
+    Nenhuma tarefa cadastrada.
+  </p>
+
+  <div class="task-grid" *ngIf="tasks.length > 0">
+    <mat-card *ngFor="let task of tasks" class="task-card">
+      <mat-card-header>
+        <mat-card-title>{{ task.titulo }}</mat-card-title>
+        <mat-card-subtitle>{{ task.status }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
         <p>{{ task.descricao }}</p>
-        <p>{{ task.prioridade }}</p>
-        <p>{{ task.status }}</p>
-        <button (click)="onDeleteTask(task.id)">
-            Deletar Tarefa
+        <span class="task-priority">
+          Prioridade: {{ task.prioridade }}
+        </span>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button (click)="onEditTask(task)">
+          <mat-icon>edit</mat-icon>
+          Editar
         </button>
-        <button (click)="onEditTask(task)">
-            Atualizar Tarefa
+
+        <button mat-button color="warn" (click)="onDeleteTask(task.id)">
+          <mat-icon>delete</mat-icon>
+          Excluir
         </button>
-    </li>
-</ul>
+      </mat-card-actions>
+
+      <div class="task-execution">
+        <mat-checkbox #emailCheckbox>
+          Enviar e-mail
+        </mat-checkbox>
+
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="task.status === Status.CONCLUIDA"
+          (click)="onExecuteTask(task.id, emailCheckbox.checked)">
+          <mat-icon>play_arrow</mat-icon>
+          Executar
+        </button>
+      </div>
+    </mat-card>
+  </div>
+</section>

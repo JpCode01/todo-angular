@@ -1,42 +1,81 @@
-<h2>{{ title }}</h2>
+<mat-card class="task-form-card">
+  <mat-card-header>
+    <mat-card-title>{{ title }}</mat-card-title>
+    <mat-card-subtitle>
+      Preencha as informações da tarefa.
+    </mat-card-subtitle>
+  </mat-card-header>
 
-<input type="text" [(ngModel)]="taskName" placeholder="Título da sua tareda">
+  <mat-card-content>
+    <form
+    class="task-form" 
+    #taskForm="ngForm"
+    (ngSubmit)="submitTask()">
 
-<textarea
-  name="description"
-  [(ngModel)]="taskDescription"
-  placeholder="Descreva sua tarefa">
-</textarea>
+      <mat-form-field appearance="outline">
+        <mat-label>Título da tarefa</mat-label>
+        <input
+          matInput
+          name="taskName"
+          [(ngModel)]="taskName"
+          #taskNameControl="ngModel"
+          placeholder="Ex.: Estudar Angular"
+          required>
+        <mat-error *ngIf="taskNameControl.hasError('required')">
+          O título da tarefa é obrigatório.
+        </mat-error>
+      </mat-form-field>
 
-<select name="priority" [(ngModel)]="taskPriority">
-  <option *ngFor="let priority of priorityList" [value]="priority">
-    {{ priority }}
-  </option>
-</select>
+      <mat-form-field appearance="outline">
+        <mat-label>Descrição</mat-label>
+        <textarea
+          matInput
+          name="taskDescription"
+          [(ngModel)]="taskDescription"
+          placeholder="Descreva sua tarefa"
+          rows="3">
+        </textarea>
+      </mat-form-field>
 
-<label *ngIf="task !== null" for="status">
-  Status da tarefa
-</label>
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Prioridade</mat-label>
+          <mat-select name="priority" [(ngModel)]="taskPriority">
+            <mat-option
+              *ngFor="let priority of priorityList"
+              [value]="priority">
+              {{ priority }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-<select
-  *ngIf="task !== null"
-  id="status"
-  name="status"
-  [(ngModel)]="taskStatus">
+        <mat-form-field appearance="outline" *ngIf="task !== null">
+          <mat-label>Status</mat-label>
+          <mat-select name="status" [(ngModel)]="taskStatus">
+            <mat-option
+              *ngFor="let status of statusList"
+              [value]="status">
+              {{ status }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-  <option *ngFor="let status of statusList" [value]="status">
-    {{ status }}
-  </option>
-</select>
+      <div class="form-actions">
+        <button
+          mat-stroked-button
+          type="button"
+          *ngIf="task !== null"
+          (click)="cancelEdit()">
+          Cancelar
+        </button>
 
-<button (click)="submitTask()">
-    Salvar
-</button>
+        <button mat-raised-button color="primary" type="submit">
+          <mat-icon>save</mat-icon>
+          {{ task !== null ? 'Salvar alterações' : 'Criar tarefa' }}
+        </button>
+      </div>
 
-<p *ngIf="hasError">
-    O título da tarefa é obrigatório.
-</p>
-
-<button type="button" *ngIf="task !== null" (click)="cancelEdit()">
-    Cancelar edição
-</button>
+    </form>
+  </mat-card-content>
+</mat-card>

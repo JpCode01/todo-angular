@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { taskResponse } from '../models/task-response.model';
@@ -34,5 +34,20 @@ export class TaskService {
       `${this.API_URL}/${id}`,
       task
     )
+  }
+
+  executeTask(id: number, email: boolean): Observable<{ 
+    resultado: string, tarefa: taskResponse }> {
+    const params = new HttpParams()
+    .set('email', String(email))
+
+    return this.httpClient.post<{
+      resultado: string;
+      tarefa: taskResponse;
+    }>(
+      `${this.API_URL}/${id}/executar`,
+      null,
+      { params }
+    );
   }
 }
